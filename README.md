@@ -45,6 +45,7 @@ samplesheet.csv
 
 项目结构参考nextflow
 
+```plain
 .
 ├── README.md 流程概要
 ├── assests 流程静态资源（meta示例……）
@@ -59,6 +60,7 @@ samplesheet.csv
 │   └── smk
 ├── utils 流程工具类、函数
 └── workflow 主流程
+```
 
 local代表自身开发，smk代表复用（暂无）
 

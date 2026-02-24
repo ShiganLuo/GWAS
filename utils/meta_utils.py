@@ -353,7 +353,6 @@ def main():
         log=args.log
     )
     res = metadataVariantsUtils.run()
-    print(res)
-    
+    return res    
 if __name__ == "__main__":
     main()

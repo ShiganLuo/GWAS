@@ -1,0 +1,53 @@
+project: mutant-data-analyzer
+meta: data/Exome/samplesheet.csv
+outdir: output
+
+# Which assays to run. Supported values: WES, WGS.
+assays:
+  - WES
+  - WGS
+
+# Optionally restrict samples per assay (otherwise auto-derive from meta).
+samples:
+  WES: []
+  WGS: []
+
+fastq:
+  source: data/Exome/Rawdata          # raw FASTQ root for optional auto-discovery
+  prepared: output/raw_fastq           # meta_utils will populate here
+
+reference:
+  WES:
+    fasta: "/path/to/WES/hg38.fasta"
+    interval: "/path/to/WES/targets.interval_list"
+    known_sites:
+      - "/path/to/resources_broad_hg38_v0_1000G_phase1.snps.high_confidence.hg38.vcf"
+      - "/path/to/resources_broad_hg38_v0_Mills_and_1000G_gold_standard.indels.hg38.vcf"
+      - "/path/to/resources_broad_hg38_v0_Homo_sapiens_assembly38.dbsnp138.vcf"
+    gnomad: "/path/to/af-only-gnomad.hg38.vcf.gz"
+    pon: "/path/to/1000g_pon.hg38.vcf.gz"
+    bwa_index_prefix: null
+  WGS:
+    fasta: "/path/to/WGS/hg38.fasta"
+    interval: null
+    known_sites:
+      - "/path/to/resources_broad_hg38_v0_1000G_phase1.snps.high_confidence.hg38.vcf"
+      - "/path/to/resources_broad_hg38_v0_Mills_and_1000G_gold_standard.indels.hg38.vcf"
+      - "/path/to/resources_broad_hg38_v0_Homo_sapiens_assembly38.dbsnp138.vcf"
+    gnomad: "/path/to/af-only-gnomad.hg38.vcf.gz"
+    pon: "/path/to/1000g_pon.hg38.vcf.gz"
+    bwa_index_prefix: null
+
+procedure:
+  trim_galore: trim_galore
+  bwaMem2: bwa-mem2
+  samtools: samtools
+  gatk: gatk
+
+tmp_dir: tmp
+
+conda:
+  gatk: "/home/zhousha/miniforge3/envs/DNA"
+  align: "/home/zhousha/miniforge3/envs/DNA"
+  run: "/home/zhousha/miniforge3/envs/DNA"
+  cfDNA_base: "/home/zhousha/miniforge3/envs/DNA"
