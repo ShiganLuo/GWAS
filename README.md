@@ -43,26 +43,30 @@ samplesheet.csv
 
 ## 项目结构
 
-项目结构参考nextflow
+推荐的 Snakemake 友好目录（在现有基础上逐步迁移即可）：
 
 ```plain
 .
-├── README.md 流程概要
-├── assests 流程静态资源（meta示例……）
-├── config 流程配置
-├── docs 流程详细文档
-├── main.py 启动脚本
-├── rules 最小不可拆分规则（可以有多个规则组合，面板规则）
-│   ├── local
-│   └── smk
-├── subworkflow 子流程
-│   ├── local
-│   └── smk
-├── utils 流程工具类、函数
-└── workflow 主流程
+├── README.md
+├── assets/
+├── config/
+│   └── profiles/
+├── docs/
+├── envs/                # 通用环境
+├── modules/             # 可复用/可覆写的规则集合（替代当前 rules/local）
+├── subworkflows/        # 需要整块调用的子流程（可选）
+├── scripts/             # 规则脚本（若多，可放 modules/*/scripts）
+├── utils/               # CLI 辅助，如 meta_utils
+├── tests/               # 最小数据与 CI
+├── Snakefile            # 入口：解析参数，选择 subworkflow 或 module 组合
+└── main.py              # 可选封装 CLI，调用 snakemake -s Snakefile ...
 ```
 
-local代表自身开发，smk代表复用（暂无）
+说明：
+
+- local 代表自研规则或子流程，smk 代表复用的外部 Snakemake 组件。
+- 将入口 Snakefile 放在 workflow/ 方便 Snakedeploy、profile 与模块复用；保留 main.smk 便于渐进迁移。
+- assets/、resources/、envs/、tests/ 可按需落地，先创建占位再逐步充实。
 
 
 
