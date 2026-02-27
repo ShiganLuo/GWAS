@@ -20,9 +20,9 @@ rule fastqc:
         fastqc = config.get("Procedure", {}).get("fastqc", "fastqc")
     threads: 6
     conda:
-        config["conda"]["run"]
+        "fastqc.yaml"
     log:
-        outdir + "/log/Align/{sample_id}/fastqc.txt"
+        outdir + "/log/qc/{sample_id}/fastqc.txt"
     shell:
         """
         mkdir -p {output}
@@ -32,3 +32,7 @@ rule fastqc:
             {input} \
             > {log} 2>&1
         """
+
+rule fastqc_result:
+    input:
+        directory(outdir + "/fastqc/{sample_id}")

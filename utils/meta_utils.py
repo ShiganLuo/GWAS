@@ -324,15 +324,10 @@ class MetadataVariantsUtils:
                                     data_id_col = self.data_id_col,
                                 )
             pairs = self.build_design_pairs()
-            return {
-                "info": self.samples_dict,
-                "pairs": pairs
-            }
+            return self.samples_dict, pairs, self.outdir
         elif self.fastq_dir:
             self.prepare_fastq_dir(self.fastq_dir,self.outdir,fq_pattern="*fq.gz")
-            return {
-                "info": self.samples_dict
-            }
+            return self.samples_dict, [], self.outdir
         else:
             raise ValueError("Either meta or fastq_dir must be provided.")
 

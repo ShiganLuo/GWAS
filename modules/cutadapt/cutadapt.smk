@@ -1,3 +1,5 @@
+outdir = config.get("outdir", "results/cutadapt")
+indir = config.get("indir", "data/fastq")
 rule trimming_Paired:
     input:
         fastq1 = indir + "/{sample_id}_1.fq.gz",
@@ -13,7 +15,7 @@ rule trimming_Paired:
         trim_galore = config.get('Procedure',{}).get('trim_galore') or 'trim_galore'
     threads: 6
     conda:
-        config['conda']['run']
+        "cutadapt.yaml"
     log:
         log = outdir + "/log/Align/{sample_id}/trimming.txt"
     shell:
@@ -39,7 +41,7 @@ rule trimming_Single:
         trim_galore = config.get('Procedure',{}).get('trim_galore') or 'trim_galore'
     threads: 6
     conda:
-        config['conda']['run']
+        "cutadapt.yaml"
     log:
         log = outdir + "/log/Align/{sample_id}/trimming.txt"
     shell:

@@ -20,8 +20,13 @@ meta_utils.py处理，多lane合并，单lane创建软链接
 ### 模式1
 
 ```python
-python workflow/variants/utils/meta_utils.py --outdir output --fastq_dir data/Exome/Rawdata
+python workflow/variants/utils/meta_utils.py --outdir output --fastq_dir data/Exome/Rawdata 
 ```
+```
+snakemake -s workflow/mutant-data-analyzer/main.smk --use-conda --cores 25 --config indir=data/Exome/Rawdata outdir=output metadata=data/Exome/samplesheet.csv --conda-prefix /data/pub/zhousha/env/mutation_0.1
+```
+- --conda-prefix固定pipeline的conda环境，以便下个项目复用
+
 
 ### 模式2
 
@@ -47,19 +52,15 @@ samplesheet.csv
 
 ```plain
 .
-├── README.md
-├── assets/
-├── config/
-│   └── profiles/
-├── docs/
-├── envs/                # 通用环境
-├── modules/             # 可复用/可覆写的规则集合（替代当前 rules/local）
-├── subworkflows/        # 需要整块调用的子流程（可选）
-├── scripts/             # 规则脚本（若多，可放 modules/*/scripts）
-├── utils/               # CLI 辅助，如 meta_utils
-├── tests/               # 最小数据与 CI
-├── Snakefile            # 入口：解析参数，选择 subworkflow 或 module 组合
-└── main.py              # 可选封装 CLI，调用 snakemake -s Snakefile ...
+├── Snakefile           # 入口，include/use modules 或定义 subworkflow
+├── main.py             # 可选：CLI 封装参数解析
+├── modules/            # 所有可复用规则
+├── subworkflows/       # 黑盒子流程（若仍需）
+├── config/             # config.yaml/json, profiles/
+├── envs/               # conda/mamba 环境
+├── scripts/            # 规则脚本
+├── utils/              # CLI 辅助，如 meta_utils
+├── assets/ docs/ tests/
 ```
 
 说明：
