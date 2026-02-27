@@ -3,3 +3,9 @@ Procedure:
     properties:
       # 以下工具路径允许为 string 或 null (对应 YAML 中的空值)
       trim_galore: {type: ["string", "null"]}
+indir:
+    type: string
+    default: "data/fastq"
+outdir:
+    type: string
+    default: "results/cutadapt"

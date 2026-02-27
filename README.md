@@ -52,7 +52,7 @@ samplesheet.csv
 
 ```plain
 .
-├── Snakefile           # 入口，include/use modules 或定义 subworkflow
+├── main.smk          # 入口，include/use modules 或定义 subworkflow
 ├── main.py             # 可选：CLI 封装参数解析
 ├── modules/            # 所有可复用规则
 ├── subworkflows/       # 黑盒子流程（若仍需）
@@ -65,9 +65,9 @@ samplesheet.csv
 
 说明：
 
-- local 代表自研规则或子流程，smk 代表复用的外部 Snakemake 组件。
-- 将入口 Snakefile 放在 workflow/ 方便 Snakedeploy、profile 与模块复用；保留 main.smk 便于渐进迁移。
-- assets/、resources/、envs/、tests/ 可按需落地，先创建占位再逐步充实。
+- subworkflow通过module组合module下的smk中的规则来实现指定流程；通过config实现smk接口
+- module每个smk所属目录包含三个文件：smk、yaml(conda环境)、schema.yaml(smk接口)
+- main.smk引入metdata，定义生成目标文件函数来控制流程
 
 
 
