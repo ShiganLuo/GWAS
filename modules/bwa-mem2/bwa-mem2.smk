@@ -3,7 +3,7 @@ outdir = config.get("outdir", "output")
 fasta = config.get("fasta")
 paired_samples = config.get("paired_samples")
 single_samples = config.get("single_samples")
-BWAMEM2_IDX_SUFFIX = ["123", "amb", "ann", "bwt.2bit.64", "pac"]
+BWAMEM2_IDX_SUFFIX = ["0123", "amb", "ann", "bwt.2bit.64", "pac"]
 #Mapping with bwa
 rule bwaMem2_index:
     input:
@@ -102,8 +102,9 @@ rule bwaMem2_alignment:
         {params.bwa_mem2} mem \
         -T 0 \
         -t {threads} \
-        {params.index_prefix} {params.input_params} \
-        2 >> {log} \
+        {params.index_prefix} \
+        {params.input_params} \
+        2>> {log} \
         | {params.samtools} view -b - 2>> {log} \
         > {output.bam}
 

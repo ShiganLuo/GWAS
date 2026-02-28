@@ -52,7 +52,8 @@ samplesheet.csv
 
 ```plain
 .
-├── main.smk          # 入口，include/use modules 或定义 subworkflow
+├── main.smk            # 入口，include/use modules 或定义 subworkflow
+├── input.yaml          # 用户输入，也可通过--config key=value……输入
 ├── main.py             # 可选：CLI 封装参数解析
 ├── modules/            # 所有可复用规则
 ├── subworkflows/       # 黑盒子流程（若仍需）
@@ -60,7 +61,9 @@ samplesheet.csv
 ├── envs/               # conda/mamba 环境
 ├── scripts/            # 规则脚本
 ├── utils/              # CLI 辅助，如 meta_utils
-├── assets/ docs/ tests/
+├── assets/             # 静态资源
+├── docs/               # 文档
+├── tests/              # 测试目录（可选）
 ```
 
 说明：
