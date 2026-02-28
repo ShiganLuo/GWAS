@@ -1,0 +1,6 @@
+indir: "data/Exome/Rawdata"
+outdir: "output"
+metadata: "data/Exome/samplesheet.csv"
+fasta: "/data/pub/zhousha/Reference/mouse/GENCODE/GRCm39/GRCm39.primary_assembly.genome.fa"
+log: "workflow.log"
+bwaMem2_index_prefix: ""

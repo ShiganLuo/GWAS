@@ -162,7 +162,7 @@ class MetadataVariantsUtils:
             
             self.samples_dict[sample_id].sample_id = sample_id
             self.samples_dict[sample_id].design = df_sample[design_col].values[0] if design_col in df_sample.columns else ""
-            self.samples_dict[sample_id].organism = df_sample[organism_col].values[0] if organism_col in df_sample.columns else "human"
+            self.samples_dict[sample_id].organism = df_sample[organism_col].values[0] if organism_col in df_sample.columns else "UNKNOWN"
 
             if len(data_ids) == 1:
                 self.logger.info(f"Detect the relationship between {sample_id} and {data_ids[0]} is one-to-one")
@@ -312,7 +312,7 @@ class MetadataVariantsUtils:
     ) -> Dict[str, List[Tuple[str, str]]]:
         out = defaultdict(list)
         for ctr, exp in pairs:
-            org = samples.get(ctr, SampleInfo()).organism or "human"
+            org = samples.get(ctr, SampleInfo()).organism or "UNKNOWN"
             out[org].append((ctr, exp))
         return out
 
@@ -324,10 +324,10 @@ class MetadataVariantsUtils:
                                     data_id_col = self.data_id_col,
                                 )
             pairs = self.build_design_pairs()
-            return self.samples_dict, pairs, self.outdir
+            return self.samples_dict, pairs, str(self.outdir / "raw_fastq")
         elif self.fastq_dir:
             self.prepare_fastq_dir(self.fastq_dir,self.outdir,fq_pattern="*fq.gz")
-            return self.samples_dict, [], self.outdir
+            return self.samples_dict, [], str(self.outdir / "raw_fastq")
         else:
             raise ValueError("Either meta or fastq_dir must be provided.")
 

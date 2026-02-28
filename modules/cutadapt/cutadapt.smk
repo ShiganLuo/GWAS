@@ -1,5 +1,5 @@
-outdir = config.get("outdir", "results/cutadapt")
-indir = config.get("indir", "data/fastq")
+outdir = config.get("outdir", "output")
+indir = config.get("indir", "output/raw_fastq")
 rule trimming_Paired:
     input:
         fastq1 = indir + "/{sample_id}_1.fq.gz",

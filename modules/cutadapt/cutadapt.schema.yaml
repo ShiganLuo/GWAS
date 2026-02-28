@@ -5,7 +5,7 @@ Procedure:
       trim_galore: {type: ["string", "null"]}
 indir:
     type: string
-    default: "data/fastq"
+    default: "output/raw_fastq"
 outdir:
     type: string
-    default: "results/cutadapt"
+    default: "output"
