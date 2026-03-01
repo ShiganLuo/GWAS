@@ -14,7 +14,7 @@ rule bwaMem2_index:
             ext = BWAMEM2_IDX_SUFFIX
         )
     log:
-        outdir + "/log/{genome}/bwa_indexing.txt"
+        outdir + "/log/bwa-mem2/{genome}/bwa_indexing.txt"
     threads: 15
     conda:
         "bwa-mem2.yaml"
@@ -85,9 +85,9 @@ rule bwaMem2_alignment:
         fastq = get_alignment_input,
         index = get_bwaMem2_index
     output:
-        bam = outdir + "/{genome}/bam/{sample_id}.bam",
+        bam = outdir + "/bam/{genome}/{sample_id}.bam",
     log:
-        outdir + "/log/{genome}/{sample_id}/bwa-alignment.txt"
+        outdir + "/log/bwa-mem2/{genome}/{sample_id}/bwa-alignment.txt"
     threads: 15
     conda:
         "bwa-mem2.yaml"
@@ -111,4 +111,4 @@ rule bwaMem2_alignment:
         """
 rule bwaMemm2_result:
     input:
-        bam = outdir + "/{genome}/bam/{sample_id}.bam",
+        bam = outdir + "/bam/{genome}/{sample_id}.bam"

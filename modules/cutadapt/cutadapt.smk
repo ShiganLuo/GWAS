@@ -7,8 +7,8 @@ rule trimming_Paired:
     output:
         fastq1 = temp(outdir + "/cutadapt/{sample_id}_1.fq.gz"),
         fastq2 = temp(outdir + "/cutadapt/{sample_id}_2.fq.gz"),
-        report1 = outdir + "/log/Align/{sample_id}/trimming_statistics_1.txt",
-        report2 = outdir + "/log/Align/{sample_id}/trimming_statistics_2.txt"
+        report1 = outdir + "/log/cutadapt/{sample_id}/trimming_statistics_1.txt",
+        report2 = outdir + "/log/cutadapt/{sample_id}/trimming_statistics_2.txt"
     params:
         outdir = outdir + "/cutadapt",
         quality = 30,
@@ -17,7 +17,7 @@ rule trimming_Paired:
     conda:
         "cutadapt.yaml"
     log:
-        log = outdir + "/log/Align/{sample_id}/trimming.txt"
+        log = outdir + "/log/cutadapt/{sample_id}/trimming.txt"
     shell:
         """
         # trim_galore can automatically judge the fq quality scoring system,it's no need to add such as --phred33 --phred64
@@ -34,7 +34,7 @@ rule trimming_Single:
         fastq = indir + "/{sample_id}.fq.gz"
     output:
         fastq = temp(outdir + "/cutadapt/{sample_id}.fq.gz"),
-        report = outdir + "/log/Align/{sample_id}/trimming_statistics.txt"
+        report = outdir + "/log/cutadapt/{sample_id}/trimming_statistics.txt"
     params:
         outdir = outdir + "/cutadapt",
         quality = 30,
@@ -43,7 +43,7 @@ rule trimming_Single:
     conda:
         "cutadapt.yaml"
     log:
-        log = outdir + "/log/Align/{sample_id}/trimming.txt"
+        log = outdir + "/log/cutadapt/{sample_id}/trimming.txt"
     shell:
         """
         {params.trim_galore} --phred33  --cores {threads} --quality {params.quality} \
@@ -53,12 +53,15 @@ rule trimming_Single:
         """
 
 
-rule triming_reslut:
+rule triming_paired_reslut:
     input:
         fastq1 = outdir + "/cutadapt/{sample_id}_1.fq.gz",
         fastq2 = outdir + "/cutadapt/{sample_id}_2.fq.gz",
-        report1 = outdir + "/log/Align/{sample_id}/trimming_statistics_1.txt",
-        report2 = outdir + "/log/Align/{sample_id}/trimming_statistics_2.txt",
+        report1 = outdir + "/log/cutadapt/{sample_id}/trimming_statistics_1.txt",
+        report2 = outdir + "/log/cutadapt/{sample_id}/trimming_statistics_2.txt",
+
+rule triming_single_result:
+    input:
         fastq = outdir + "/cutadapt/{sample_id}.fq.gz",
-        report = outdir + "/log/Align/{sample_id}/trimming_statistics.txt"
+        report = outdir + "/log/cutadapt/{sample_id}/trimming_statistics.txt"
 

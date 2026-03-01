@@ -17,6 +17,15 @@
 
 meta_utils.py处理，多lane合并，单lane创建软链接
 
+run.yaml必需参数，也可以通过--config key=value……形式提供
+
+```plain
+indir
+outdir
+metadata
+fasta
+```
+
 ### 模式1
 
 ```python

@@ -93,13 +93,14 @@ class MetadataVariantsUtils:
     def build_design_pairs(
             self, 
             design_col:str = "design"
-        ) -> List[Tuple[str, str]]:
+        ) -> List[Tuple[str, str, str]]:
         """
         Determine ctr/exp pairs based on the design stored in self.samples_dict.
         ctr_x vs exp_x1, exp_x2 ...
         only get the first ctr for each exp, if there are multiple ctr with the same tag, will log a warning and only use the first one.
+        return a list of tuple: (organism, ctr_sample_id, exp_sample_id)
         """
-        groups: Dict[str, Dict[str, List[str]]] = defaultdict(lambda: defaultdict(list))
+        groups: Dict[str, Dict[str, List[SampleInfo]]] = defaultdict(lambda: defaultdict(list))
         
         for sample_id, info in self.samples_dict.items():
             design_val = getattr(info, design_col, "")
@@ -110,17 +111,17 @@ class MetadataVariantsUtils:
                 self.logger.warning(f"Invalid design format for {sample_id}: {design_val}")
                 continue
             role, tag = m.groups()
-            groups[tag][role].append(sample_id)
+            groups[tag][role].append(info)
         
         pairs = []
         for tag, g in groups.items():
             if "ctr" not in g or "exp" not in g:
                 self.logger.warning(f"Incomplete design group for tag '{tag}': missing ctr or exp")
                 continue
-            for exp_sample in g["exp"]:
+            for exp_sample_info in g["exp"]:
                 if len(g["ctr"]) > 1:
-                    self.logger.warning(f"Multiple ctr samples for tag '{tag}': {g['ctr']}. Only using the first one: {g['ctr'][0]}")
-                pairs.append((g["ctr"][0], exp_sample))  # 每个 exp 对应 ctr
+                    self.logger.warning(f"Multiple ctr samples for tag '{tag}': {g['ctr']}. Only using the first one: {g['ctr'][0].sample_id}")
+                pairs.append((exp_sample_info.organism,g["ctr"][0].sample_id, exp_sample_info.sample_id))  # 每个 exp 对应 ctr
         return pairs
 
 

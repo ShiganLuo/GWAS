@@ -33,8 +33,12 @@ single_samples = []
 # function to get the output files for WES analysis
 def get_WES_outfiles(samples_info_dict:dict):
     include: "subworkflow/WES.smk"
+    for organism, normal_sample_id, experimental_sample_id in pairs:
+        outfiles.append(f"{outdir}/gatk/mutect2-vcf/{organism}/{normal_sample_id}_{experimental_sample_id}.vcf.gz")
+    
     for sample_id, sample_info in samples_info_dict.items():
-        outfiles.append(f"{outdir}/{sample_info.organism}/bam/{sample_id}.bam")
+        outfiles.append(f"{outdir}/bam/{sample_info.organism}/{sample_id}.bam")
+        outfiles.append(f"{outdir}/gatk/bam-sorted-Markdup/{sample_info.organism}/{sample_id}.bam")
         if sample_info.layout == 'SE':
             outfiles.append(f"{outdir}/cutadapt/{sample_id}_1.fq.gz")
             single_samples.append(sample_id)

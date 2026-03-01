@@ -4,3 +4,15 @@ metadata: "data/Exome/samplesheet.csv"
 fasta: "/data/pub/zhousha/Reference/mouse/GENCODE/GRCm39/GRCm39.primary_assembly.genome.fa"
 log: "workflow.log"
 bwaMem2_index_prefix: ""
+Procedure:
+  gatk: null
+  samtools: null
+  bwaMem2: null
+  fastqc: null
+  trim_galore: null
+  samtools: null
+addReadsGroup:
+  RGLB: lib1
+  RGPL: DNBSEQ
+  RGPU: T7_run1
+mutect2_parameters: null
