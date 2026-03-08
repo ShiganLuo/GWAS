@@ -1,0 +1,9 @@
+params:
+  perform_bqsr: True
+  extract_exome: True
+  keep_proper_pair: True
+
+tools:
+  gatk: ""
+  bwa_mem2: ""
+  samtools: ""
